@@ -1,0 +1,28 @@
+# Gradle
+.gradle/
+build/
+
+# Eclipse
+bin/
+.settings/
+.classpath
+.project
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# Node
+node_modules
+nodejs
+npm
+
+
+# Logs
+*.log
+logs/
+
+
+# Generated
+package-lock.json
