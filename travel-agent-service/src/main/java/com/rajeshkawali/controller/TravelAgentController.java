@@ -12,6 +12,7 @@ import com.rajeshkawali.model.FlightStatus;
 import com.rajeshkawali.model.HotelBooking;
 import com.rajeshkawali.model.Tourist;
 import com.rajeshkawali.service.TravelAgentService;
+import com.rajeshkawali.util.TravelAgentFeignProxy;
 
 @RestController
 @RequestMapping("/travel")
@@ -21,14 +22,25 @@ public class TravelAgentController {
 	@Autowired
 	TravelAgentService travelAgentService;
 	
+	@Autowired
+	private TravelAgentFeignProxy proxy;
+	
 	@GetMapping("/hotels")
 	public List<HotelBooking> getAllHotels(){
 		return travelAgentService.getAllHotels();
 	}
 	
+	// http://localhost:8084/travel/hotels/1133
 	@GetMapping("/hotels/{touristId}")
 	public HotelBooking getSpecificTouristBookings(@PathVariable("touristId") Integer touristId){
 		return travelAgentService.getHotelBooking(touristId);
+	}
+	
+	// http://localhost:8084/travel/hotels-feign/1122
+	@GetMapping("/hotels-feign/{touristId}")
+	public HotelBooking getSpecificTouristHotelBooking(@PathVariable("touristId") Integer touristId){
+		HotelBooking hotel = proxy.getSpecificTouristHotelBookingUsingFeign(touristId);
+		return hotel;
 	}
 	
 	@GetMapping("/flights")
